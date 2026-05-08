@@ -7,6 +7,13 @@ public class DashState : IPlayerState
 
     public void Enter(PlayerController player)
     {
+        if (!player.Stamina.TryConsume(player.Stamina.DashCost))
+        {
+            // Nema stamine — vrati se u Idle
+            player.StateMachine.ChangeState(new IdleState());
+            return;
+        }
+
         _dashTimer = player.DashDuration;
         _dashDirection = player.IsFacingRight ? 1f : -1f;
 
@@ -15,7 +22,6 @@ public class DashState : IPlayerState
             _dashDirection * player.DashForce, 0f);
 
         player.StartDashCooldown();
-        // player.Animator.Play("Dash");
     }
 
     public void Update(PlayerController player)

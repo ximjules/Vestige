@@ -7,6 +7,12 @@ public class LightAttackState : IPlayerState
 
     public void Enter(PlayerController player)
     {
+        if (!player.Stamina.TryConsume(player.Stamina.LightAttackCost))
+        {
+            player.StateMachine.ChangeState(new IdleState());
+            return;
+        }
+
         _attackTimer = player.LightAttackCooldown;
         _hasDealtDamage = false;
 

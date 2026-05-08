@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour
     // State
     public bool IsGrounded { get; private set; }
     public bool IsFacingRight { get; private set; } = true;
+    public StaminaSystem Stamina { get; private set; }
 
     // Events
     public event System.Action<float> OnPlayerDamaged;
@@ -53,6 +54,7 @@ public class PlayerController : MonoBehaviour
         Animator = GetComponent<Animator>();
         StateMachine = new PlayerStateMachine(this);
         StateMachine.Initialize(new IdleState());
+        Stamina = GetComponent<StaminaSystem>();
     }
 
     private void Update()
